@@ -1,5 +1,5 @@
 {
-    "name": "infyomlabs/laravel-generator",
+    "name": "deyvisonrocha/laravel-generator",
     "description": "InfyOm Laravel Generator",
     "keywords": [
         "laravel",
@@ -20,6 +20,10 @@
         {
             "name": "Mitul Golakiya",
             "email": "me@mitul.me"
+        },
+        {
+            "name": "Deyvison Rocha",
+            "email": "deyvison@gmail.com"
         }
     ],
     "require": {
