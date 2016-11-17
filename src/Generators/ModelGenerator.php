@@ -188,7 +188,7 @@ class ModelGenerator extends BaseGenerator
         return str_replace('$TIMESTAMPS$', $replace, $templateData);
     }
 
-    private function generateRules()
+    public function generateRules()
     {
         $rules = [];
 
