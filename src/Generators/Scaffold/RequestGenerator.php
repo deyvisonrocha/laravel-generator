@@ -4,6 +4,7 @@ namespace InfyOm\Generator\Generators\Scaffold;
 
 use InfyOm\Generator\Common\CommandData;
 use InfyOm\Generator\Generators\BaseGenerator;
+use InfyOm\Generator\Generators\ModelGenerator;
 use InfyOm\Generator\Utils\FileUtil;
 
 class RequestGenerator extends BaseGenerator
@@ -20,10 +21,14 @@ class RequestGenerator extends BaseGenerator
     /** @var string */
     private $updateFileName;
 
+    /** @var ModelGenerator */
+    private $modelGenerator;
+
     public function __construct(CommandData $commandData)
     {
         $this->commandData = $commandData;
         $this->path = $commandData->config->pathRequest;
+        $this->modelGenerator = new ModelGenerator($this->commandData);
         $this->createFileName = 'Create'.$this->commandData->modelName.'Request.php';
         $this->updateFileName = 'Update'.$this->commandData->modelName.'Request.php';
     }
@@ -40,6 +45,8 @@ class RequestGenerator extends BaseGenerator
 
         $templateData = fill_template($this->commandData->dynamicVars, $templateData);
 
+        $templateData = str_replace('$RULES$', implode(','.infy_nl_tab(1, 2), $this->modelGenerator->generateRules()), $templateData);
+
         FileUtil::createFile($this->path, $this->createFileName, $templateData);
 
         $this->commandData->commandComment("\nCreate Request created: ");
@@ -51,6 +58,8 @@ class RequestGenerator extends BaseGenerator
         $templateData = get_template('scaffold.request.update_request', 'laravel-generator');
 
         $templateData = fill_template($this->commandData->dynamicVars, $templateData);
+
+        $templateData = str_replace('$RULES$', implode(','.infy_nl_tab(1, 2), $this->modelGenerator->generateRules()), $templateData);
 
         FileUtil::createFile($this->path, $this->updateFileName, $templateData);
 
